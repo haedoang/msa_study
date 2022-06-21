@@ -1,4 +1,4 @@
-package io.haedoang.customer;
+package io.haedoang.fraud;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,31 +6,32 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
- * fileName : Customer
+ * fileName : FraudCheckHistory
  * author : haedoang
  * date : 2022-06-21
  * description :
  */
 @Data
 @Builder
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer {
+@Entity
+public class FraudCheckHistory {
     @Id
     @SequenceGenerator(
-            name = "customer_id_sequence",
-            sequenceName = "customer_id_sequence",
+            name = "fraud_id_sequence",
+            sequenceName = "fraud_id_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "customer_id_sequence"
+            generator = "fraud_id_sequence"
     )
     private Integer id;
-    private String firstName;
-    private String lastName;
-    private String email;
+    private Integer customerId;
+    private Boolean isFraudster;
+    private LocalDateTime createdAt;
 }
