@@ -17,6 +17,8 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     show-sql: true
+  zipkin:
+    base-url: http://10.22.21.240:9411
 
 eureka:
   client:
