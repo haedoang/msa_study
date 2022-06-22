@@ -1,4 +1,4 @@
-package io.haedoang.customer;
+package io.haedoang.clients.fraud;
 
 /**
  * fileName : FraudCheckResponse
