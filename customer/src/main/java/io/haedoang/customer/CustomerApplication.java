@@ -15,7 +15,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
         basePackages = "io.haedoang.clients"
 )
 @EnableEurekaClient
-@SpringBootApplication
+@SpringBootApplication(
+        scanBasePackages = {
+                "io.haedoang.customer",
+                "io.haedoang.amqp"
+        }
+)
 public class CustomerApplication {
     public static void main(String[] args) {
         SpringApplication.run(CustomerApplication.class, args);

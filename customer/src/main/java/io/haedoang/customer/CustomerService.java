@@ -1,5 +1,6 @@
 package io.haedoang.customer;
 
+import io.haedoang.amqp.RabbitMQMessageProducer;
 import io.haedoang.clients.fraud.FraudCheckResponse;
 import io.haedoang.clients.fraud.FraudClient;
 import io.haedoang.clients.notification.NotificationClient;
@@ -18,10 +19,12 @@ import org.springframework.web.client.RestTemplate;
 @AllArgsConstructor
 public class CustomerService {
     private final CustomerRepository customerRepository;
-    private final RestTemplate restTemplate;
+    //private final RestTemplate restTemplate;
 
     private final FraudClient fraudClient;
-    private final NotificationClient notificationClient;
+//    private final NotificationClient notificationClient;
+
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -50,12 +53,25 @@ public class CustomerService {
             throw new IllegalStateException("fraudster");
         }
 
-        // todo: make it async, i.e add to queue
-        notificationClient.save(
-                new NotificationRequest(
-                        customer.getId(),
-                        customer.getEmail(),
-                        String.format("Hello %s, welcome", customer.getFirstName()))
+//        as-is
+//        notificationClient.save(
+//                new NotificationRequest(
+//                        customer.getId(),
+//                        customer.getEmail(),
+//                        String.format("Hello %s, welcome", customer.getFirstName()))
+//        );
+
+
+        NotificationRequest notificationRequest = new NotificationRequest(
+                customer.getId(),
+                customer.getEmail(),
+                String.format("Hello %s, welcome", customer.getFirstName())
+        );
+
+        rabbitMQMessageProducer.publish(
+                notificationRequest,
+                "internal.exchange",
+                "internal.notification.routing-key"
         );
     }
 
