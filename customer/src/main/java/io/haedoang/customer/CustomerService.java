@@ -2,6 +2,8 @@ package io.haedoang.customer;
 
 import io.haedoang.clients.fraud.FraudCheckResponse;
 import io.haedoang.clients.fraud.FraudClient;
+import io.haedoang.clients.notification.NotificationClient;
+import io.haedoang.clients.notification.NotificationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -19,6 +21,7 @@ public class CustomerService {
     private final RestTemplate restTemplate;
 
     private final FraudClient fraudClient;
+    private final NotificationClient notificationClient;
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -47,7 +50,13 @@ public class CustomerService {
             throw new IllegalStateException("fraudster");
         }
 
-        // todo: send notification
+        // todo: make it async, i.e add to queue
+        notificationClient.save(
+                new NotificationRequest(
+                        customer.getId(),
+                        customer.getEmail(),
+                        String.format("Hello %s, welcome", customer.getFirstName()))
+        );
     }
 
 }
