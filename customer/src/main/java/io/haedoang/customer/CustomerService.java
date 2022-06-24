@@ -3,11 +3,9 @@ package io.haedoang.customer;
 import io.haedoang.amqp.RabbitMQMessageProducer;
 import io.haedoang.clients.fraud.FraudCheckResponse;
 import io.haedoang.clients.fraud.FraudClient;
-import io.haedoang.clients.notification.NotificationClient;
 import io.haedoang.clients.notification.NotificationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * fileName : CustomerService

@@ -47,17 +47,17 @@ services:
     networks:
       - spring
 
-#  eureka-server:
-#    image: haedoang/eureka-server:latest
-#    container_name: eureka-server
-#    ports:
-#      - "8761:8761"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#    depends_on:
-#      - zipkin
+  eureka-server:
+    image: haedoang/eureka-server:latest
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
 
 #  apigw:
 #    image: haedoang/apigw:latest
