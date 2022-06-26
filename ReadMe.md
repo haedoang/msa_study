@@ -127,7 +127,7 @@ public class CustomerService {
 }
 ```
 
-- 서비스를 찾는 방법은 `[spring.application.name](http://spring.application.name)` 이다
+- 서비스를 찾는 방법은 `spring.application.name` 이다
 
 ## Distributed Tracing
 
